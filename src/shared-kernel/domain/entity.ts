@@ -1,9 +1,10 @@
-export abstract class Entity<T extends EntityId> {
+import { v4 as uuidv4 } from 'uuid';
+export abstract class Entity<T extends EntityId<unknown>> {
   private readonly _id: T;
   private _createdAt: Date;
   private _updatedAt: Date;
 
-  constructor(id: T) {
+  protected constructor(id: T) {
     this._id = id;
     this._createdAt = new Date();
     this._updatedAt = new Date();
@@ -33,10 +34,23 @@ export abstract class Entity<T extends EntityId> {
   }
 }
 
-export abstract class EntityId {
-  abstract equals(other: EntityId): boolean;
-  abstract toString(): string;
-  static generate(): EntityId {
-    throw new Error('Not implemented');
+export abstract class EntityId<T> {
+  protected constructor(public readonly value: T) {}
+  equals(other: EntityId<T>): boolean {
+    return this.value === other.value;
   }
+  toString(): T {
+    return this.value;
+  }
+  static generate() {
+    return this.prototype.generate();
+  }
+
+  static from<V>(value: V): EntityId<V> {
+    return this.prototype.from(value);
+  }
+
+  abstract from(value: T): EntityId<T>;
+
+  abstract generate(): EntityId<T>;
 }

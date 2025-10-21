@@ -1,3 +1,5 @@
+import { DomainException } from '../../domain/domain-exception';
+
 export class Result<T = void> {
   private constructor(
     public readonly isSuccess: boolean,
@@ -14,8 +16,8 @@ export class Result<T = void> {
     return new Result<T>(false, null, error, errorCode);
   }
 
-  static fromError<T>(error: Error, errorCode?: string): Result<T> {
-    return new Result<T>(false, null, error.message, errorCode ?? null);
+  static fromError<T>(error: DomainException): Result<T> {
+    return new Result<T>(false, null, error.message, error.errorCode ?? null);
   }
 
   get isFailure(): boolean {
