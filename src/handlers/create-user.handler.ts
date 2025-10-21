@@ -41,7 +41,7 @@ export class CreateUserCommandHandler
 
       return Result.success(newUser);
     } catch (error) {
-      return Result.fromError<UserDto>(error, 'CREATE_USER_ERROR');
+      return Result.fromError<UserDto>(error);
     }
   }
 

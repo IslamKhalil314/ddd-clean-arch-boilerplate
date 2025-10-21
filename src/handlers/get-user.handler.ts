@@ -27,7 +27,7 @@ export class GetUserQueryHandler
 
       return Result.success(foundUser);
     } catch (error) {
-      return Result.fromError<UserDto>(error, 'GET_USER_ERROR');
+      return Result.fromError<UserDto>(error);
     }
   }
 }

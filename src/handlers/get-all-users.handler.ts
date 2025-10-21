@@ -25,7 +25,7 @@ export class GetAllUsersQueryHandler
 
       return Result.success(users);
     } catch (error) {
-      return Result.fromError<UserDto[]>(error, 'GET_ALL_USERS_ERROR');
+      return Result.fromError<UserDto[]>(error);
     }
   }
 }
